@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "gameTitle": "Team Fortress 2",
+      "score": 7.5,
+      "progress": "Playing"
+    },
+    {
+      "id": 2,
+      "gameTitle": "Dota 2",
+      "score": 8,
+      "progress": "Not Playing"
+    },
+    {
+      "id": 3,
+      "gameTitle": "Outer Wilds",
+      "score": 9,
+      "progress": "Finished"
+    },
+    {
+      "gameTitle": "test",
+      "score": "1231",
+      "progress": "afefw",
+      "id": 4
+    },
+    {
+      "gameTitle": "taeaw",
+      "score": "aewfawfae",
+      "progress": "232323",
+      "id": 5
+    }
+  ]
+}
