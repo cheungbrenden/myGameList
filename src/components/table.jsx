@@ -1,23 +1,34 @@
 /* eslint-disable react/prop-types */
-const GameTable = ({filteredData}) => {
+import TableHeader from "./table-headers"
+
+const GameTable = ({sortedFilteredData, handleSortOrderChange, sortOrder, deleteGame}) => {
+    
+    if (sortedFilteredData.length == 0) {
+        return (
+            <div className="search">
+                No games match the search filter. 
+            </div>
+        )
+    }
+
 
     return (
         <div>
             <table className="gameTable">
                 <thead>
                     <tr>
-                        <th>Game Title</th>
-                        <th>Score</th>
-                        <th>Progress</th>
+                        <TableHeader headingId={'gameTitle'} text={"Game Title"} handleSortOrderChange={handleSortOrderChange} sortOrder={sortOrder}/>
+                        <TableHeader headingId={'score'} text={"Score"} handleSortOrderChange={handleSortOrderChange} sortOrder={sortOrder}/>
+                        <TableHeader headingId={'progress'} text={"Progress"} handleSortOrderChange={handleSortOrderChange} sortOrder={sortOrder}/>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredData.map((val, key) => {
+                    {sortedFilteredData.map(game => {
                         return (
-                            <tr key={key}>
-                                <td>{val.gameTitle}</td>
-                                <td>{val.score}</td>
-                                <td>{val.progress}</td>
+                            <tr key={game.id}>
+                                <td>{game.gameTitle} <button >Edit</button> <button onClick={() => deleteGame(game.id)}>Delete</button></td>
+                                <td>{game.score}</td>
+                                <td>{game.progress}</td>
                             </tr>
                         )
                     })}
