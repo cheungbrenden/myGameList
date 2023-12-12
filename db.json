@@ -2,37 +2,37 @@
   "data": [
     {
       "gameTitle": "Minecraft",
-      "score": "3",
-      "progress": "Playing",
+      "score": 4,
+      "progress": "Finished",
       "id": 1
     },
     {
       "gameTitle": "Dota 2",
-      "score": "7",
+      "score": 5,
       "progress": "Not Playing",
       "id": 2
     },
     {
       "gameTitle": "Roblox",
-      "score": "5",
-      "progress": "Not Playing",
+      "score": 9,
+      "progress": "Playing",
       "id": 3
     },
     {
       "gameTitle": "Team Fortress 2",
-      "score": "9",
+      "score": 9,
       "progress": "Not Playing",
       "id": 4
     },
     {
       "gameTitle": "Portal 2",
-      "score": "8",
+      "score": 8,
       "progress": "Finished",
       "id": 5
     },
     {
       "gameTitle": "Baldur's Gate",
-      "score": "10",
+      "score": 10,
       "progress": "Playing",
       "id": 6
     }

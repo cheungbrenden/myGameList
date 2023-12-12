@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import gameService from './services/games'
 import GameForm from "./components/form"
 import GameTable from "./components/table"
 
@@ -11,12 +11,13 @@ const App = () => {
   const [newProgress, setNewProgress] = useState('')
   const [search, setSearch] = useState('')
   const [sortOrder, setSortOrder] = useState(['progress', 'decreasing'])
+  const [editGameId, setEditGameId] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/data')
-      .then(response => {
-        setData(response.data)
+    gameService
+      .getAll()
+      .then(games => {
+        setData(games)
       })
   }, [])
 
@@ -75,33 +76,68 @@ const App = () => {
 
   const sortedFilteredData = sortFilteredData()
 
+
   const addGame = (e) => {
     e.preventDefault()
 
-    const gameObject = {
-      gameTitle: newGame.trim(),
-      score: newScore,
-      progress: newProgress
-    }
+    // CHECK REPEATS
+    const isRepeat = data.find((game) => game.gameTitle.toLowerCase() === newGame.trim().toLowerCase())
+    console.log(newGame.trim())
+    console.log(isRepeat)
 
-    axios
-      .post('http://localhost:3001/data', gameObject)
-      .then(response => {
-        setData(data.concat(response.data))
-        setNewGame('')
-        setNewScore('')
-        setNewProgress('')
+    if (isRepeat === undefined) {  
+
+      const gameObject = {
+        gameTitle: newGame.trim(),
+        score: Number(newScore),
+        progress: newProgress
+      }
+
+      gameService
+        .create(gameObject)
+        .then(game => {
+          setData(data.concat(game))
+          setNewGame('')
+          setNewScore('')
+          setNewProgress('')
+        })
+    }
+    else {
+      window.alert("aaaa")
+    }
+  }
+
+  const editGame = (e) => {
+    e.preventDefault()
+
+    const gameToEdit = sortedFilteredData.find(game => game.id === editGameId)
+
+    // const gameObject = {
+    //   gameTitle: gameToEdit.gameTitle,
+    //   score: Number(newScore),
+    //   progress: newProgress
+    // }
+
+    gameService
+      .update(gameToEdit.id, {...gameToEdit, score: Number(newScore), progress: newProgress})
+      .then((updatedPerson) => {
+        setData(data.map(game => gameToEdit.id === game.id ? updatedPerson : game))
+        setEditGameId("")
+        setNewScore("")
+        setNewProgress("")
       })
   }
 
   const deleteGame = (id) => {
-    axios
-      .delete(`http://localhost:3001/data/${id}`)
+    gameService
+      .remove(id)
       .then(response => {
         setData(data.filter((game) => game.id !== id))
       })
 
   }
+
+  
 
   const handleGameChange = (e) => {
     setNewGame(e.target.value)
@@ -117,6 +153,14 @@ const App = () => {
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value)
+  }
+
+  const handleEditGameIdChange = (id) => {
+    setEditGameId(id)
+  }
+
+  const handleCancelEdit = () => {
+    setEditGameId("")
   }
 
   const handleSortOrderChange = (category) => {
@@ -144,15 +188,22 @@ const App = () => {
         sortedFilteredData={sortedFilteredData}
         handleSortOrderChange={handleSortOrderChange}
         sortOrder={sortOrder}
-        deleteGame={deleteGame} />
+        deleteGame={deleteGame} 
+        handleEditGameIdChange={handleEditGameIdChange} />
       <GameForm
+        sortedFilteredData={sortedFilteredData}
         newGame={newGame}
         newScore={newScore}
         newProgress={newProgress}
+        editGameId={editGameId}
         addGame={addGame}
+        editGame={editGame}
         handleGameChange={handleGameChange}
         handleScoreChange={handleScoreChange}
         handleProgressChange={handleProgressChange}
+        handleCancelEdit={handleCancelEdit}
+        
+        
       />
     </div>
   )

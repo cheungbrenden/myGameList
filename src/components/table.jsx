@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import TableHeader from "./table-headers"
 
-const GameTable = ({sortedFilteredData, handleSortOrderChange, sortOrder, deleteGame}) => {
+const GameTable = ({sortedFilteredData, handleSortOrderChange, sortOrder, deleteGame, handleEditGameIdChange}) => {
     
     if (sortedFilteredData.length == 0) {
         return (
@@ -26,7 +26,7 @@ const GameTable = ({sortedFilteredData, handleSortOrderChange, sortOrder, delete
                     {sortedFilteredData.map(game => {
                         return (
                             <tr key={game.id}>
-                                <td>{game.gameTitle} <button >Edit</button> <button onClick={() => deleteGame(game.id)}>Delete</button></td>
+                                <td>{game.gameTitle} <button onClick={() => handleEditGameIdChange(game.id)}>Edit</button> <button onClick={() => deleteGame(game.id)}>Delete</button></td>
                                 <td>{game.score}</td>
                                 <td>{game.progress}</td>
                             </tr>
