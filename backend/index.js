@@ -77,6 +77,10 @@ app.post('/api/gamedata', (request, response) => {
     response.json(game)
 })
 
+// app.put('/api/gamedata/:id', (request, response) => {
+
+// })
+
 // need to add put request for updating a speicfic game
 
 const unknownEndpoint = (request, response) => {
