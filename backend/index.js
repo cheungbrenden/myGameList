@@ -6,6 +6,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static('dist'))
 
 let gameData = [
     {
@@ -46,11 +47,6 @@ let gameData = [
     }
 ]
 
-
-// app.get('/', (request, response) => {
-//   response.send('<h1>Hello World!</h1>')
-// })
-
 app.get('/api/gamedata', (request, response) => {
     response.json(gameData)
 })
@@ -80,6 +76,8 @@ app.post('/api/gamedata', (request, response) => {
     gameData = gameData.concat(game)
     response.json(game)
 })
+
+// need to add put request for updating a speicfic game
 
 const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
