@@ -80,7 +80,6 @@ const App = () => {
   const addGame = (e) => {
     e.preventDefault()
 
-    // CHECK REPEATS
     const isRepeat = data.find((game) => game.gameTitle.toLowerCase() === newGame.trim().toLowerCase())
     console.log(newGame.trim())
     console.log(isRepeat)

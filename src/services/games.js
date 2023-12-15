@@ -1,7 +1,8 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/data'
+const baseUrl = 'http://localhost:3001/api/gameData'
 
 const getAll = () => {
+    console.log("testing1")
     const request = axios.get(baseUrl)
     return request.then(request => request.data)
 }
