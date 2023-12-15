@@ -52,7 +52,6 @@ let gameData = [
 // })
 
 app.get('/api/gamedata', (request, response) => {
-    console.log("testing2222")
     response.json(gameData)
 })
 
