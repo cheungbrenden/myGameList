@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+const mongoose = require('mongoose')
 
 const app = express()
 
@@ -8,47 +10,54 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static('dist'))
 
-let gameData = [
-    {
-        "gameTitle": "Minecraft",
-        "score": 4,
-        "progress": "Finished",
-        "id": 1
-    },
-    {
-        "gameTitle": "Dota 2",
-        "score": 5,
-        "progress": "Not Playing",
-        "id": 2
-    },
-    {
-        "gameTitle": "Roblox",
-        "score": 9,
-        "progress": "Playing",
-        "id": 3
-    },
-    {
-        "gameTitle": "Team Fortress 2",
-        "score": 9,
-        "progress": "Not Playing",
-        "id": 4
-    },
-    {
-        "gameTitle": "Portal 2",
-        "score": 8,
-        "progress": "Finished",
-        "id": 5
-    },
-    {
-        "gameTitle": "Baldur's Gate",
-        "score": 10,
-        "progress": "Playing",
-        "id": 6
-    }
-]
+const Game = require('./models/game')
+
+
+
+// let gameData = [
+//     {
+//         "gameTitle": "Minecraft",
+//         "score": 4,
+//         "progress": "Finished",
+//         "id": 1
+//     },
+//     {
+//         "gameTitle": "Dota 2",
+//         "score": 5,
+//         "progress": "Not Playing",
+//         "id": 2
+//     },
+//     {
+//         "gameTitle": "Roblox",
+//         "score": 9,
+//         "progress": "Playing",
+//         "id": 3
+//     },
+//     {
+//         "gameTitle": "Team Fortress 2",
+//         "score": 9,
+//         "progress": "Not Playing",
+//         "id": 4
+//     },
+//     {
+//         "gameTitle": "Portal 2",
+//         "score": 8,
+//         "progress": "Finished",
+//         "id": 5
+//     },
+//     {
+//         "gameTitle": "Baldur's Gate",
+//         "score": 10,
+//         "progress": "Playing",
+//         "id": 6
+//     }
+// ]
 
 app.get('/api/gamedata', (request, response) => {
-    response.json(gameData)
+    Game.find({}).then(games => {
+        response.json(games)
+    })
+
 })
 
 app.get('/api/gamedata/:id', (request, response) => {
@@ -71,10 +80,13 @@ app.delete('/api/gamedata/:id', (request, response) => {
 })
 
 app.post('/api/gamedata', (request, response) => {
+    
     const game = request.body
-    game.id = Math.floor(Math.random() * 100000)
-    gameData = gameData.concat(game)
-    response.json(game)
+    
+
+
+    // gameData = gameData.concat(game)
+    // response.json(game)
 })
 
 // app.put('/api/gamedata/:id', (request, response) => {
